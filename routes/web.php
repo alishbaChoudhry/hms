@@ -5,6 +5,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\SymptomController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -108,7 +109,44 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])
         ->name('appointments.destroy');
+// Notifications
+    // =========================
 
+    Route::get('/notifications/{notification}/read', function ($notification) {
+
+        $notification = auth()->user()
+            ->notifications()
+            ->findOrFail($notification);
+
+        $notification->markAsRead();
+
+        return redirect(
+            $notification->data['url'] ?? route('dashboard')
+        );
+
+    })->name('notifications.read');
+
+    Route::get('/medical-care', function () {
+    return view('medical-care.index');
+})->name('medical-care');
+
+Route::get('/symptoms', [SymptomController::class, 'index'])
+    ->name('symptoms.index');
+
+    Route::get('/symptoms/create', [SymptomController::class, 'create'])
+    ->name('symptoms.create');
+
+Route::post('/symptoms', [SymptomController::class, 'store'])
+    ->name('symptoms.store');
+
+    Route::get('/symptoms/{symptom}/edit', [SymptomController::class, 'edit'])
+    ->name('symptoms.edit');
+
+Route::put('/symptoms/{symptom}', [SymptomController::class, 'update'])
+    ->name('symptoms.update');
+
+    Route::delete('/symptoms/{symptom}', [SymptomController::class, 'destroy'])
+    ->name('symptoms.destroy');
 });
 
 

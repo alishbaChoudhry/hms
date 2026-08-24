@@ -94,55 +94,84 @@
                     <i class="bi bi-bell fs-5"></i>
 
                     <span
-                        class="navbar-badge badge text-bg-warning"
-                        style="font-size: 9px;"
-                    >
-                        3
-                    </span>
+    class="navbar-badge badge text-bg-warning"
+    style="font-size: 9px;"
+>
+    {{ auth()->user()->unreadNotifications->count() }}
+</span>
 
                 </a>
 
 
                 {{-- Notification Dropdown --}}
-                <div
-                    class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm"
-                >
+<div
+    class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm"
+    style="max-height: 400px; overflow-y: auto;"
+>
 
-                    <span class="dropdown-item dropdown-header">
-                        3 Notifications
-                    </span>
+    {{-- Notification Header --}}
+    <span class="dropdown-item dropdown-header">
+        {{ auth()->user()->unreadNotifications->count() }} Notifications
+    </span>
 
-                    <div class="dropdown-divider"></div>
+    <div class="dropdown-divider"></div>
 
-                    <a href="#" class="dropdown-item py-2">
 
-                        <i class="bi bi-person-plus me-2 text-primary"></i>
+    {{-- Notifications --}}
+    @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
 
-                        New patient registered
+        <a
+            href="{{ route('notifications.read', $notification->id) }}"
+            class="dropdown-item py-2"
+        >
 
-                    </a>
+            @if(($notification->data['type'] ?? '') === 'patient')
 
-                    <div class="dropdown-divider"></div>
+                <i class="bi bi-person-plus me-2 text-primary"></i>
 
-                    <a href="#" class="dropdown-item py-2">
+            @elseif(($notification->data['type'] ?? '') === 'appointment')
 
-                        <i class="bi bi-calendar-check me-2 text-success"></i>
+                <i class="bi bi-calendar-check me-2 text-success"></i>
 
-                        New appointment
+            @elseif(($notification->data['type'] ?? '') === 'doctor')
 
-                    </a>
+                <i class="bi bi-person-badge me-2 text-info"></i>
 
-                    <div class="dropdown-divider"></div>
+            @else
 
-                    <a href="#" class="dropdown-item py-2">
+                <i class="bi bi-bell me-2 text-warning"></i>
 
-                        <i class="bi bi-person-badge me-2 text-info"></i>
+            @endif
 
-                        Doctor added
 
-                    </a>
+            {{ \Illuminate\Support\Str::limit($notification->data['message'] ?? 'New notification', 30) }}
 
-                </div>
+        </a>
+
+        <div class="dropdown-divider"></div>
+
+    @empty
+
+        <span class="dropdown-item text-muted text-center py-3">
+            No new notifications
+        </span>
+
+    @endforelse
+
+
+    {{-- View All --}}
+    @if(auth()->user()->unreadNotifications->count() > 0)
+
+        <a
+            href="#"
+            class="dropdown-item dropdown-footer text-center"
+        >
+            View all notifications
+        </a>
+
+    @endif
+
+</div>
 
             </li>
 
@@ -168,63 +197,63 @@
 
 
                 {{-- User Dropdown --}}
-                <ul
-                    class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm"
-                >
+<ul
+    class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm"
+>
 
-                    {{-- User Header --}}
-                    <li class="user-header text-bg-primary text-center">
+    {{-- User Header --}}
+    <li class="user-header text-bg-primary text-center">
 
-                        <i class="bi bi-person-circle fs-1"></i>
+        <i class="bi bi-person-circle fs-1"></i>
 
-                        <p class="mb-0 mt-2">
-                            Admin
-                        </p>
+        <p class="mb-0 mt-2">
+            Admin
+        </p>
 
-                        <small>
-                            Hospital Management System
-                        </small>
+        <small>
+            Hospital Management System
+        </small>
 
-                    </li>
-
-
-                    {{-- User Footer --}}
-                    <li
-                        class="user-footer d-flex justify-content-between"
-                    >
-
-                        {{-- Profile --}}
-                        <a
-                            href="#"
-                            class="btn btn-sm btn-outline-secondary"
-                        >
-                            <i class="bi bi-person me-1"></i>
-                            Profile
-                        </a>
+    </li>
 
 
-                        {{-- Logout --}}
-                        <form
-                            action="{{ route('logout') }}"
-                            method="POST"
-                            class="d-inline"
-                        >
+    {{-- User Footer --}}
+    <li
+        class="user-footer d-flex justify-content-between"
+    >
 
-                            @csrf
+        {{-- Profile --}}
+        <a
+            href="#"
+            class="btn btn-sm btn-outline-secondary"
+        >
+            <i class="bi bi-person me-1"></i>
+            Profile
+        </a>
 
-                            <button
-                                type="submit"
-                                class="btn btn-sm btn-outline-danger"
-                            >
-                                <i class="bi bi-box-arrow-right me-1"></i>
-                                Logout
-                            </button>
 
-                        </form>
+        {{-- Logout --}}
+        <form
+            action="{{ route('logout') }}"
+            method="POST"
+            class="d-inline"
+        >
 
-                    </li>
+            @csrf
 
-                </ul>
+            <button
+                type="submit"
+                class="btn btn-sm btn-outline-danger"
+            >
+                <i class="bi bi-box-arrow-right me-1"></i>
+                Logout
+            </button>
+
+        </form>
+
+    </li>
+
+</ul>
 
             </li>
 

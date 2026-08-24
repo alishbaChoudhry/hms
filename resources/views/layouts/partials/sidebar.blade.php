@@ -2,42 +2,42 @@
 
     <div class="sidebar-brand" style="height: 105px; overflow: visible;">
 
-    <a href="{{ route('dashboard') }}"
-       class="brand-link"
-       style="
-           display: flex;
-           align-items: center;
-           padding-left: 5px;
-       ">
+        <a href="{{ route('dashboard') }}"
+           class="brand-link"
+           style="
+               display: flex;
+               align-items: center;
+               padding-left: 5px;
+           ">
 
-        <img
-    src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}"
-    alt="HMS Logo"
-    style="
-        width: 100px;
-        height: 100px;
-        object-fit: contain;
-        margin-left: -85px;
-        margin-right: 8px;
-        margin-top: 10px;
-    "
->
+            <img
+                src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}"
+                alt="HMS Logo"
+                style="
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    margin-left: -85px;
+                    margin-right: 8px;
+                    margin-top: 10px;
+                "
+            >
 
-        <span
-            style="
-                color: #ffffff !important;
-                font-size: 28px;
-                font-weight: 300;
-                margin-left: 20px;
-                margin-top: 15px;
-            "
-        >
-            HMS
-        </span>
+            <span
+                style="
+                    color: #ffffff !important;
+                    font-size: 28px;
+                    font-weight: 300;
+                    margin-left: 20px;
+                    margin-top: 15px;
+                "
+            >
+                HMS
+            </span>
 
-    </a>
+        </a>
 
-</div>
+    </div>
 
 
     {{-- Sidebar Wrapper --}}
@@ -103,6 +103,7 @@
                 <li class="nav-item">
 
                     <a href="{{ route('appointments.index') }}" class="nav-link">
+
                         <i class="nav-icon bi bi-calendar-check"></i>
 
                         <p>
@@ -114,36 +115,25 @@
                 </li>
 
 
-                {{-- Departments --}}
-                <li class="nav-item">
 
-                    <a href="#" class="nav-link">
+                   {{-- Medical Care --}}
+<li class="nav-item">
 
-                        <i class="nav-icon bi bi-building"></i>
+    <a href="{{ route('medical-care') }}" class="nav-link">
 
-                        <p>
-                            Departments
-                        </p>
+        <i class="nav-icon bi bi-heart-pulse"></i>
 
-                    </a>
+        <p>
+            Medical Care
+        </p>
 
-                </li>
+    </a>
 
-
-                {{-- Medicines --}}
-                <li class="nav-item">
-
-                    <a href="#" class="nav-link">
-
-                        <i class="nav-icon bi bi-capsule"></i>
-
-                        <p>
-                            Medicines
-                        </p>
-
-                    </a>
+</li>
+                    </ul>
 
                 </li>
+
 
             </ul>
 

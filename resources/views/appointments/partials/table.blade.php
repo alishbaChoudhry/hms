@@ -36,9 +36,7 @@
                         Status
                     </th>
 
-                    <th class="py-3" style="width: 220px;">
-                        Reason / Symptoms
-                    </th>
+                    
 
                     <th class="py-3 text-center" style="width: 180px;">
                         Actions
@@ -130,29 +128,21 @@
 
                         </td>
 
-                        {{-- Reason / Symptoms --}}
-                        <td style="
-                            width: 220px;
-                            min-width: 220px;
-                            max-width: 220px;
-                            white-space: normal;
-                            word-break: break-word;
-                        ">
-                            {{ $appointment->reason }}
-                        </td>
 
                         {{-- Actions --}}
                         <td class="text-center"
                             style="width: 180px; min-width: 180px; white-space: nowrap;">
 
                             {{-- View --}}
-                            <a href="{{ route('appointments.show', $appointment->id) }}"
-                               class="btn btn-sm btn-info me-1">
+                            <button type="button"
+                             class="btn btn-sm btn-info me-1"
+                             data-bs-toggle="modal"
+                             data-bs-target="#appointmentViewModal{{ $appointment->id }}">
 
-                                <i class="bi bi-eye me-1"></i>
-                                View
+                            <i class="bi bi-eye me-1"></i>
+                            View
 
-                            </a>
+                            </button>
 
                             {{-- Edit --}}
                             <a href="{{ route('appointments.edit', $appointment->id) }}"
@@ -186,11 +176,343 @@
 
                     </tr>
 
+
+{{-- Appointment View Modal --}}
+<div class="modal fade"
+     id="appointmentViewModal{{ $appointment->id }}"
+     tabindex="-1"
+     aria-labelledby="appointmentViewModalLabel{{ $appointment->id }}"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow"
+             style="border-radius: 10px; overflow: hidden;">
+
+            {{-- Modal Header --}}
+            <div class="modal-header"
+                 style="
+                    background: #f8fafc;
+                    border-bottom: 1px solid #e5e7eb;
+                    padding: 12px 18px;
+                 ">
+
+                <div>
+
+                    <h5 class="modal-title mb-0"
+                        id="appointmentViewModalLabel{{ $appointment->id }}"
+                        style="
+                            font-size: 18px;
+                            font-weight: 600;
+                            color: #1f2937;
+                        ">
+
+                        <i class="bi bi-calendar-check me-2"
+                           style="color: #0d6efd;"></i>
+
+                        Appointment Details
+
+                    </h5>
+
+                    <small class="text-muted">
+                        Appointment #{{ $appointment->id }}
+                    </small>
+
+                </div>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+
+            </div>
+
+
+            {{-- Modal Body --}}
+            <div class="modal-body"
+                 style="padding: 16px 18px;">
+
+                {{-- Patient & Doctor --}}
+                <div class="row g-2 mb-3">
+
+                    <div class="col-md-6">
+
+                        <div style="
+                            background: #f8fafc;
+                            border: 1px solid #e5e7eb;
+                            border-radius: 7px;
+                            padding: 9px 12px;
+                        ">
+
+                            <small class="text-muted d-block mb-1">
+                                Patient
+                            </small>
+
+                            <div style="
+                                font-size: 15px;
+                                font-weight: 600;
+                                color: #1f2937;
+                            ">
+
+                                <i class="bi bi-person me-2"
+                                   style="color: #0d6efd;"></i>
+
+                                {{ $appointment->patient->name }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div style="
+                            background: #f8fafc;
+                            border: 1px solid #e5e7eb;
+                            border-radius: 7px;
+                            padding: 9px 12px;
+                        ">
+
+                            <small class="text-muted d-block mb-1">
+                                Doctor
+                            </small>
+
+                            <div style="
+                                font-size: 15px;
+                                font-weight: 600;
+                                color: #1f2937;
+                            ">
+
+                                <i class="bi bi-person-badge me-2"
+                                   style="color: #0d6efd;"></i>
+
+                                {{ $appointment->doctor->name }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Appointment Information --}}
+                <div class="row g-2 mb-3">
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block mb-1">
+                            Date
+                        </small>
+
+                        <div style="
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: #374151;
+                        ">
+
+                            <i class="bi bi-calendar3 me-2"
+                               style="color: #0d6efd;"></i>
+
+                            {{ $appointment->appointment_date }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block mb-1">
+                            Time
+                        </small>
+
+                        <div style="
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: #374151;
+                        ">
+
+                            <i class="bi bi-clock me-2"
+                               style="color: #0d6efd;"></i>
+
+                            {{ $appointment->appointment_time }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block mb-1">
+                            Appointment Type
+                        </small>
+
+                        <div style="
+                            font-size: 14px;
+                            font-weight: 500;
+                            color: #374151;
+                        ">
+
+                            <i class="bi bi-clipboard-check me-2"
+                               style="color: #0d6efd;"></i>
+
+                            {{ $appointment->appointment_type }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block mb-1">
+                            Status
+                        </small>
+
+                        <span class="badge
+                            @if($appointment->status === 'Pending')
+                                bg-warning text-dark
+                            @elseif($appointment->status === 'Confirmed')
+                                bg-primary
+                            @elseif($appointment->status === 'Completed')
+                                bg-success
+                            @elseif($appointment->status === 'Cancelled')
+                                bg-danger
+                            @endif"
+                            style="
+                                padding: 5px 10px;
+                                font-size: 11px;
+                                border-radius: 5px;
+                            ">
+
+                            {{ $appointment->status }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Reason / Symptoms --}}
+                <div class="mb-2">
+
+                    <div style="
+                        background: #f8fafc;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 7px;
+                        padding: 10px 12px;
+                    ">
+
+                        <div style="
+                            font-size: 13px;
+                            font-weight: 600;
+                            color: #374151;
+                            margin-bottom: 4px;
+                        ">
+
+                            <i class="bi bi-chat-left-text me-2"
+                               style="color: #0d6efd;"></i>
+
+                            Reason / Symptoms
+
+                        </div>
+
+                        <div style="
+                            color: #6b7280;
+                            font-size: 13px;
+                            line-height: 1.4;
+                        ">
+
+                            {{ $appointment->reason ?? 'N/A' }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- Notes --}}
+                <div>
+
+                    <div style="
+                        background: #f8fafc;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 7px;
+                        padding: 10px 12px;
+                    ">
+
+                        <div style="
+                            font-size: 13px;
+                            font-weight: 600;
+                            color: #374151;
+                            margin-bottom: 4px;
+                        ">
+
+                            <i class="bi bi-journal-text me-2"
+                               style="color: #0d6efd;"></i>
+
+                            Notes
+
+                        </div>
+
+                        <div style="
+                            color: #6b7280;
+                            font-size: 13px;
+                            line-height: 1.4;
+                        ">
+
+                            {{ $appointment->notes ?? 'N/A' }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {{-- Modal Footer --}}
+            <div class="modal-footer"
+                 style="
+                    background: #f8fafc;
+                    border-top: 1px solid #e5e7eb;
+                    padding: 9px 18px;
+                 ">
+
+                <button type="button"
+                        class="btn btn-secondary btn-sm px-3"
+                        data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
                 @empty
 
                     <tr>
 
-                        <td colspan="9"
+                        <td colspan="8"
                             class="text-center py-4 text-muted">
 
                             No appointments found.

@@ -39,6 +39,12 @@
     .patient-success-close:hover {
         opacity: 0.6;
     }
+
+    .#highlightedPatient {
+    background-color: #fff3cd !important;
+    transition: background-color 1s ease;
+
+}
 </style>
 
 @section('content')
@@ -189,6 +195,19 @@
         });
 
     });
+</script>
+
+<script>
+    setTimeout(function () {
+
+        const row = document.getElementById('highlightedPatient');
+
+        if (row) {
+            row.style.backgroundColor = '';
+            row.removeAttribute('id');
+        }
+
+    }, 3000);
 </script>
 
 @endsection
