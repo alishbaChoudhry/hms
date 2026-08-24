@@ -40,11 +40,7 @@
         opacity: 0.6;
     }
 
-    .#highlightedPatient {
-    background-color: #fff3cd !important;
-    transition: background-color 1s ease;
-
-}
+    
 </style>
 
 @section('content')
@@ -156,17 +152,6 @@
 
 {{-- Auto Hide Success Message --}}
 
-<script>
-    setTimeout(function () {
-
-        const message = document.getElementById('patientSuccessMessage');
-
-        if (message) {
-            message.remove();
-        }
-
-    }, 3000);
-</script>
 
 <script>
     document.addEventListener('click', function (event) {

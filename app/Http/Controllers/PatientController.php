@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 class PatientController extends Controller
 {
     public function index(Request $request)
-{
-    $patients = Patient::oldest()->paginate(10);
+    {
+        $patients = Patient::oldest()->paginate(10);
 
-    if ($request->ajax()) {
-        return view('patients.partials.table', compact('patients'))->render();
+        if ($request->ajax()) {
+            return view('patients.partials.table', compact('patients'))->render();
+        }
+
+        return view('patients.patients', compact('patients'));
     }
-
-    return view('patients.patients', compact('patients'));
-}
 
     public function create()
     {
@@ -26,7 +26,7 @@ class PatientController extends Controller
 
     public function store(StorePatientRequest $request)
     {
-        Patient::create($request->validated());
+        $patient = Patient::create($request->validated());
 
         return redirect()
             ->route('patients')
@@ -48,11 +48,11 @@ class PatientController extends Controller
     }
 
     public function destroy(Patient $patient)
-{
-    $patient->delete();
+    {
+        $patient->delete();
 
-    return redirect()
-        ->route('patients')
-        ->with('success', 'Patient deleted successfully.');
-}
+        return redirect()
+            ->route('patients')
+            ->with('success', 'Patient deleted successfully.');
+    }
 }

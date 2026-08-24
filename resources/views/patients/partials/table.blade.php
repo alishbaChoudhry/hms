@@ -53,7 +53,7 @@
 
                 @forelse($patients as $patient)
 
-                    <tr @if(isset($highlight) && $highlight == $patient->id) id="highlightedPatient" @endif>
+                    <tr>
 
                         <td class="px-4">
                             {{ $patient->id }}
@@ -87,61 +87,62 @@
                             {{ $patient->address }}
                         </td>
 
-                       <td class="text-center"
-    style="width: 270px; min-width: 270px; white-space: nowrap;">
+                        <td class="text-center"
+                            style="width: 270px; min-width: 270px; white-space: nowrap;">
 
-    <div class="d-flex justify-content-center align-items-center gap-1">
+                            <div class="d-flex justify-content-center align-items-center gap-1">
 
-        {{-- View --}}
+                                {{-- View --}}
 
-        <button type="button"
-                class="btn btn-sm btn-info"
-                data-bs-toggle="modal"
-                data-bs-target="#patientViewModal{{ $patient->id }}">
+                                <button type="button"
+                                        class="btn btn-sm btn-info"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#patientViewModal{{ $patient->id }}">
 
-            <i class="bi bi-eye me-1"></i>
-            View
+                                    <i class="bi bi-eye me-1"></i>
+                                    View
 
-        </button>
-
-
-        {{-- Edit --}}
-
-        <a href="{{ route('patients.edit', $patient->id) }}"
-           class="btn btn-sm btn-warning">
-
-            <i class="bi bi-pencil-square me-1"></i>
-            Edit
-
-        </a>
+                                </button>
 
 
-        {{-- Delete --}}
+                                {{-- Edit --}}
 
-        <form action="{{ route('patients.destroy', $patient->id) }}"
-      method="POST"
-      style="display:inline; margin:0;">
+                                <a href="{{ route('patients.edit', $patient->id) }}"
+                                   class="btn btn-sm btn-warning">
 
-            @csrf
-            @method('DELETE')
+                                    <i class="bi bi-pencil-square me-1"></i>
+                                    Edit
 
-            <button type="submit"
-        class="btn btn-sm btn-danger"
-        style="margin:0;"
-                    onclick="return confirm('Are you sure you want to delete this patient?')">
+                                </a>
 
-                <i class="bi bi-trash me-1"></i>
-                Delete
 
-            </button>
+                                {{-- Delete --}}
 
-        </form>
+                                <form action="{{ route('patients.destroy', $patient->id) }}"
+                                      method="POST"
+                                      style="display:inline; margin:0;">
 
-    </div>
+                                    @csrf
+                                    @method('DELETE')
 
-</td>
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger"
+                                            style="margin:0;"
+                                            onclick="return confirm('Are you sure you want to delete this patient?')">
+
+                                        <i class="bi bi-trash me-1"></i>
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
 
                     </tr>
+
 
                     {{-- Patient View Modal --}}
 <div class="modal fade"
