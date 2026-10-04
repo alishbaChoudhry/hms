@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('checkup_symptom', function (Blueprint $table) {
+
+            $table->id();
+
+            $table->foreignId('checkup_id')
+                  ->constrained('checkups')
+                  ->cascadeOnDelete();
+
+            $table->foreignId('symptom_id')
+                  ->constrained('symptoms')
+                  ->cascadeOnDelete();
+
+            $table->timestamps();
+
+            $table->unique([
+                'checkup_id',
+                'symptom_id'
+            ]);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('checkup_symptom');
+    }
+};

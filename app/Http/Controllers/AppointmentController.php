@@ -10,51 +10,165 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    // Appointment List
-    public function index(Request $request)
-{
-    $appointments = Appointment::with(['patient', 'doctor'])
-        ->oldest()
-        ->paginate(10);
-
-    if ($request->ajax()) {
-        return view('appointments.partials.table', compact('appointments'))->render();
+    /**
+     * Get logged-in doctor's profile
+     */
+    private function getLoggedInDoctor(): ?Doctor
+    {
+        return auth()->user()->doctor;
     }
 
-    return view('appointments.index', compact('appointments'));
-}
+    /**
+     * Appointment List
+     */
+    public function index(Request $request)
+    {
+        if (auth()->user()->hasRole('Admin')) {
 
-    // Create Appointment Form
+            // Admin can see all appointments
+            $appointments = Appointment::with(['patient', 'doctor'])
+                ->oldest()
+                ->paginate(10);
+
+        } else {
+
+            // Doctor can see only their own appointments
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor) {
+                abort(403, 'Access Denied');
+            }
+
+            $appointments = Appointment::with(['patient', 'doctor'])
+                ->where('doctor_id', $doctor->id)
+                ->oldest()
+                ->paginate(10);
+        }
+
+        if ($request->ajax()) {
+            return view(
+                'appointments.partials.table',
+                compact('appointments')
+            )->render();
+        }
+
+        return view('appointments.index', compact('appointments'));
+    }
+
+
+    /**
+     * Create Appointment Form
+     */
     public function create()
     {
         $patients = Patient::orderBy('name')->get();
-        $doctors = Doctor::orderBy('name')->get();
 
-        return view('appointments.form', compact('patients', 'doctors'));
+        if (auth()->user()->hasRole('Admin')) {
+
+            // Admin can select any doctor
+            $doctors = Doctor::orderBy('name')->get();
+
+        } else {
+
+            // Doctor can only select themselves
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor) {
+                abort(403, 'Access Denied');
+            }
+
+            $doctors = collect([$doctor]);
+        }
+
+        return view(
+            'appointments.form',
+            compact('patients', 'doctors')
+        );
     }
 
-    // Save Appointment
+
+    /**
+     * Save Appointment
+     */
     public function store(StoreAppointmentRequest $request)
     {
-        Appointment::create($request->validated());
+        $data = $request->validated();
+
+        if (!auth()->user()->hasRole('Admin')) {
+
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor) {
+                abort(403, 'Access Denied');
+            }
+
+            // Doctor can only create appointment for themselves
+            $data['doctor_id'] = $doctor->id;
+        }
+
+        Appointment::create($data);
 
         return redirect()
             ->route('appointments.index')
             ->with('success', 'Appointment created successfully.');
     }
 
+
+    /**
+     * Show Appointment
+     */
     public function show(Appointment $appointment)
-{
-    $appointment->load(['patient', 'doctor']);
+    {
+        if (!auth()->user()->hasRole('Admin')) {
 
-    return view('appointments.show', compact('appointment'));
-}
+            $doctor = $this->getLoggedInDoctor();
 
-    // Edit Appointment
+            if (!$doctor || $appointment->doctor_id !== $doctor->id) {
+                abort(403, 'Access Denied');
+            }
+        }
+
+        $appointment->load(['patient', 'doctor']);
+
+        return view(
+            'appointments.show',
+            compact('appointment')
+        );
+    }
+
+
+    /**
+     * Edit Appointment
+     */
     public function edit(Appointment $appointment)
     {
+        if (!auth()->user()->hasRole('Admin')) {
+
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor || $appointment->doctor_id !== $doctor->id) {
+                abort(403, 'Access Denied');
+            }
+        }
+
         $patients = Patient::orderBy('name')->get();
-        $doctors = Doctor::orderBy('name')->get();
+
+        if (auth()->user()->hasRole('Admin')) {
+
+            // Admin can select any doctor
+            $doctors = Doctor::orderBy('name')->get();
+
+        } else {
+
+    // Doctor can only see themselves
+    $doctor = $this->getLoggedInDoctor();
+
+    if (!$doctor) {
+        abort(403, 'Access Denied');
+    }
+
+    $doctors = collect([$doctor]);
+}
 
         return view(
             'appointments.form',
@@ -62,40 +176,86 @@ class AppointmentController extends Controller
         );
     }
 
-    // Update Appointment
+
+    /**
+     * Update Appointment
+     */
     public function update(
         StoreAppointmentRequest $request,
         Appointment $appointment
     ) {
-        $appointment->update($request->validated());
+        if (!auth()->user()->hasRole('Admin')) {
+
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor || $appointment->doctor_id !== $doctor->id) {
+                abort(403, 'Access Denied');
+            }
+        }
+
+        $data = $request->validated();
+
+        if (!auth()->user()->hasRole('Admin')) {
+
+            // Doctor cannot transfer appointment to another doctor
+            $data['doctor_id'] = $appointment->doctor_id;
+        }
+
+        $appointment->update($data);
 
         return redirect()
             ->route('appointments.index')
             ->with('success', 'Appointment updated successfully.');
     }
 
-    // Update Appointment Status
-public function updateStatus(Request $request, Appointment $appointment)
-{
-    $request->validate([
-        'status' => [
-            'required',
-            'in:Pending,Confirmed,Completed,Cancelled',
-        ],
-    ]);
 
-    $appointment->update([
-        'status' => $request->status,
-    ]);
+    /**
+     * Update Appointment Status
+     */
+    public function updateStatus(
+        Request $request,
+        Appointment $appointment
+    ) {
+        if (!auth()->user()->hasRole('Admin')) {
 
-    return redirect()
-        ->route('appointments.index')
-       ->with('success', 'Appointment status updated successfully.');
-}
+            $doctor = $this->getLoggedInDoctor();
 
-    // Delete Appointment
+            if (!$doctor || $appointment->doctor_id !== $doctor->id) {
+                abort(403, 'Access Denied');
+            }
+        }
+
+        $request->validate([
+            'status' => [
+                'required',
+                'in:Pending,Confirmed,Completed,Cancelled',
+            ],
+        ]);
+
+        $appointment->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('appointments.index')
+            ->with('success', 'Appointment status updated successfully.');
+    }
+
+
+    /**
+     * Delete Appointment
+     */
     public function destroy(Appointment $appointment)
     {
+        if (!auth()->user()->hasRole('Admin')) {
+
+            $doctor = $this->getLoggedInDoctor();
+
+            if (!$doctor || $appointment->doctor_id !== $doctor->id) {
+                abort(403, 'Access Denied');
+            }
+        }
+
         $appointment->delete();
 
         return redirect()

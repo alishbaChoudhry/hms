@@ -4,38 +4,303 @@
 
 @section('content')
 
+
+<style>
+    /* =========================
+       Appointments Page
+    ========================== */
+
+    .appointments-page {
+        padding-top: 28px;
+        margin-bottom: 24px;
+    }
+
+    /* =========================
+       Appointments Header
+    ========================== */
+
+    .appointments-header {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+
+        padding: 24px 28px;
+
+        background: linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f5f9ff 100%
+        );
+
+        border: 1px solid #e3eaf3;
+        border-radius: 16px;
+
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+
+        overflow: hidden;
+    }
+
+    .appointments-header::before {
+        content: "";
+
+        position: absolute;
+
+        width: 180px;
+        height: 180px;
+
+        right: -60px;
+        top: -90px;
+
+        border-radius: 50%;
+
+        background: rgba(13, 110, 253, 0.07);
+    }
+
+    .appointments-header::after {
+        content: "";
+
+        position: absolute;
+
+        width: 80px;
+        height: 80px;
+
+        right: 100px;
+        bottom: -45px;
+
+        border-radius: 50%;
+
+        background: rgba(13, 110, 253, 0.04);
+    }
+
+    .appointments-header > div:first-child {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* =========================
+       Title
+    ========================== */
+
+    .appointments-title {
+        margin: 0 0 7px;
+
+        font-size: 26px;
+        font-weight: 650;
+
+        color: #172033;
+
+        letter-spacing: -0.4px;
+        line-height: 1.2;
+    }
+
+    .appointments-subtitle {
+        margin: 0;
+
+        color: #64748b;
+
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* =========================
+       Add Appointment Button
+    ========================== */
+
+    .add-appointment-btn {
+        position: relative;
+        z-index: 2;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+
+        padding: 8px 14px;
+
+        border-radius: 8px;
+
+        background: #0d6efd !important;
+        border: 1px solid #0d6efd !important;
+
+        color: #ffffff !important;
+
+        font-size: 13px;
+        font-weight: 500;
+
+        box-shadow: 0 3px 8px rgba(13, 110, 253, 0.16);
+
+        transition: all 0.2s ease;
+    }
+
+    .add-appointment-btn:hover {
+        background: #0b5ed7 !important;
+        border-color: #0b5ed7 !important;
+
+        color: #ffffff !important;
+
+        transform: translateY(-1px);
+
+        box-shadow: 0 5px 12px rgba(13, 110, 253, 0.22);
+    }
+
+    /* =========================
+       Appointments Card
+    ========================== */
+
+    .appointments-card {
+        border: 1px solid #e5e7eb;
+
+        border-radius: 14px;
+
+        background: #ffffff;
+
+        box-shadow:
+            0 4px 12px rgba(15, 23, 42, 0.06);
+
+        overflow: hidden;
+    }
+
+    .appointments-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+    .appointments-card-title {
+        display: flex;
+        align-items: center;
+
+        margin: 0;
+
+        font-size: 18px;
+        font-weight: 650;
+
+        color: #172033;
+    }
+
+    .appointments-card-title i {
+        color: #0d6efd;
+
+        font-size: 19px;
+    }
+
+    .appointments-total {
+        color: #64748b;
+
+        font-size: 13px;
+        font-weight: 500;
+
+        background: #f8fafc;
+
+        border: 1px solid #e5e7eb;
+
+        padding: 5px 10px;
+
+        border-radius: 7px;
+    }
+
+    /* =========================
+       Responsive
+    ========================== */
+
+    @media (max-width: 767.98px) {
+
+        .appointments-page {
+            padding-top: 20px;
+        }
+
+        .appointments-header {
+            align-items: flex-start;
+            flex-direction: column;
+
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .appointments-title {
+            font-size: 25px;
+        }
+
+        .add-appointment-btn {
+            padding: 8px 13px;
+        }
+
+        .appointments-card-header {
+            padding: 15px;
+        }
+
+        .appointments-card-title {
+            font-size: 16px;
+        }
+
+        .appointments-total {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+
+        .appointments-page {
+            padding-top: 16px;
+        }
+
+        
+    }
+</style>
+
+
+
 {{-- Page Header --}}
-<div class="content-header py-4">
+<div class="content-header py-0">
+
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="appointments-page">
 
-            <div>
-                <h1 class="mb-1"
-                    style="font-size: 28px; font-weight: 600; color: #1f2937;">
-                    Appointments
-                </h1>
+            <div class="appointments-header">
 
-                <p class="mb-0 text-muted"
-                   style="font-size: 14px;">
-                    Manage patient appointments and schedules.
-                </p>
-            </div>
+                <div>
 
-            <div>
-                <a href="{{ route('appointments.create') }}"
-                   class="btn btn-primary px-3">
+                    <h1 class="appointments-title">
+                        Appointments
+                    </h1>
 
-                    <i class="bi bi-calendar-plus me-1"></i>
-                    Add Appointment
+                    <p class="appointments-subtitle">
+                        Manage patient appointments and schedules.
+                    </p>
 
-                </a>
+                </div>
+
+
+                @can('create appointments')
+
+                    <a href="{{ route('appointments.create') }}"
+                       class="btn add-appointment-btn">
+
+                        <i class="bi bi-calendar-plus"></i>
+
+                        Add Appointment
+
+                    </a>
+
+                @endcan
+
             </div>
 
         </div>
 
     </div>
+
 </div>
+
 
 
 {{-- Appointments Table --}}
@@ -87,35 +352,24 @@
         @endif
 
 
-        <div class="card shadow-sm border-0"
-             style="border-radius: 10px; overflow: hidden;">
+        <div class="card appointments-card">
 
-            {{-- Card Header --}}
-            <div class="card-header bg-white py-3 px-4"
-                 style="border-bottom: 1px solid #e5e7eb;">
 
-                <div class="d-flex justify-content-between align-items-center">
 
-                    <h3 class="card-title mb-0"
-                        style="font-size: 18px; font-weight: 500; color: #1f2937;">
+           {{-- Card Header --}}
+    <div class="appointments-card-header">
 
-                        <i class="bi bi-calendar-check me-2"
-                           style="color: #0d6efd;"></i>
+        <h3 class="appointments-card-title">
+            <i class="bi bi-calendar-check me-2"></i>
+            All Appointments
+        </h3>
 
-                        All Appointments
+        <span class="appointments-total">
+            Total: {{ $appointments->total() }}
+        </span>
 
-                    </h3>
+    </div>
 
-                    <span class="text-muted"
-                          style="font-size: 14px;">
-
-                        Total: {{ $appointments->total() }}
-
-                    </span>
-
-                </div>
-
-            </div>
 
 
             {{-- Appointments Table --}}

@@ -100,14 +100,82 @@
                                     >
 
                                     @error('name')
-
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
-
                                     @enderror
 
                                 </div>
+
+
+                                {{-- Symptom Description --}}
+                                <div class="col-md-12 mb-3">
+
+                                    <label for="description"
+                                           class="form-label"
+                                           style="font-weight: 500; color: #374151;">
+
+                                        Description
+
+                                    </label>
+
+                                    <textarea
+                                        name="description"
+                                        id="description"
+                                        rows="4"
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Enter a brief description of this symptom..."
+                                    >{{ old('description') }}</textarea>
+
+                                    @error('description')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+
+                                </div>
+
+
+    {{-- Field Type --}}
+<div class="col-md-12 mb-3">
+    <label for="type"
+           class="form-label"
+           style="font-weight: 500; color: #374151;">
+        Field Type
+    </label>
+
+    <select
+        name="type"
+        id="type"
+        class="form-select @error('type') is-invalid @enderror">
+
+        <option value="">
+            Select Field Type
+        </option>
+
+        <option value="Text"
+            {{ old('type') == 'Text' ? 'selected' : '' }}>
+            Text
+        </option>
+
+        <option value="Number"
+            {{ old('type') == 'Number' ? 'selected' : '' }}>
+            Number
+        </option>
+
+        <option value="Boolean"
+            {{ old('type') == 'Boolean' ? 'selected' : '' }}>
+            Boolean (Yes/No)
+        </option>
+
+    </select>
+
+    @error('type')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
 
                             </div>
 

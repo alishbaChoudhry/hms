@@ -1,147 +1,441 @@
+<style>
+    /* =========================
+       Patients Table
+    ========================== */
+
+    .patients-table {
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    /* =========================
+       Table Header
+    ========================== */
+
+    .patients-table thead th {
+        background: #eef5ff;
+        color: #334155;
+
+        font-size: 12px;
+        font-weight: 700;
+
+        text-transform: uppercase;
+        letter-spacing: 0.35px;
+
+        padding: 14px;
+
+        border-bottom: 1px solid #dbe7f5;
+
+        white-space: nowrap;
+    }
+
+    /* =========================
+       Table Body
+    ========================== */
+
+    .patients-table tbody td {
+        padding: 14px;
+
+        font-size: 14px;
+        font-weight: 500;
+        color: #334155;
+
+        border-bottom: 1px solid #edf2f7;
+
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .patients-table tbody tr {
+        background: #ffffff;
+        transition: background-color 0.15s ease;
+    }
+
+    .patients-table tbody tr:hover {
+        background: #f5f9ff;
+    }
+
+    .patients-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* =========================
+       Patient ID
+    ========================== */
+
+    .patient-id {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+    /* =========================
+       Patient Information
+    ========================== */
+
+    .patient-name {
+        color: #172033;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .patient-father,
+    .patient-cnic,
+    .patient-contact {
+        color: #334155;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+
+    /* =========================
+       Gender
+    ========================== */
+
+    .patient-gender {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 4px 9px;
+
+        border-radius: 6px;
+
+        background: #eff6ff;
+        color: #2563eb;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       Age
+    ========================== */
+
+    .patient-age {
+        color: #475569;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+
+    /* =========================
+       Address
+    ========================== */
+
+    .patient-address {
+        max-width: 220px;
+
+        color: #64748b;
+        font-size: 13px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+    /* =========================
+       Action Buttons
+    ========================== */
+
+    .patient-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 6px;
+    }
+
+    .patient-action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 5px;
+
+        height: 30px;
+        min-width: 62px;
+
+        padding: 4px 9px;
+
+        border-radius: 7px !important;
+
+        font-size: 12px !important;
+        font-weight: 500 !important;
+
+        border: 1px solid transparent !important;
+
+        box-shadow: none !important;
+
+        transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease,
+            color 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .patient-action-btn:hover {
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================
+       View Button
+    ========================== */
+
+    .patient-view-btn {
+        background: #eff6ff !important;
+        border-color: #dbeafe !important;
+        color: #2563eb !important;
+    }
+
+    .patient-view-btn:hover {
+        background: #dbeafe !important;
+        border-color: #bfdbfe !important;
+        color: #1d4ed8 !important;
+    }
+
+
+    /* =========================
+       Edit Button
+    ========================== */
+
+    .patient-edit-btn {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #475569 !important;
+    }
+
+    .patient-edit-btn:hover {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #334155 !important;
+    }
+
+
+    /* =========================
+       Delete Button
+    ========================== */
+
+    .patient-delete-btn {
+        background: #fef2f2 !important;
+        border-color: #fecaca !important;
+        color: #dc2626 !important;
+    }
+
+    .patient-delete-btn:hover {
+        background: #fee2e2 !important;
+        border-color: #fca5a5 !important;
+        color: #b91c1c !important;
+    }
+
+
+    /* =========================
+       Medical History Button
+    ========================== */
+
+    /* =========================
+   History
+========================== */
+
+.patient-history-btn {
+    background: #f5f3ff !important;
+    border-color: #ddd6fe !important;
+    color: #7c3aed !important;
+}
+
+.patient-history-btn:hover {
+    background: #ede9fe !important;
+    border-color: #c4b5fd !important;
+    color: #6d28d9 !important;
+}
+
+
+
+    /* =========================
+       Pagination
+    ========================== */
+
+    .patients-pagination {
+        padding: 14px 20px;
+        border-top: 1px solid #f1f5f9;
+    }
+
+
+    /* =========================
+       Mobile
+    ========================== */
+
+    @media (max-width: 991.98px) {
+
+        .patients-table tbody td {
+            padding: 12px;
+        }
+
+        .patient-action-btn {
+            min-width: 60px;
+            padding: 5px 8px;
+        }
+    }
+
+</style>
+
 <div class="card-body p-0">
 
     <div class="table-responsive">
 
-        <table class="table table-hover align-middle mb-0">
-
-            <thead style="background: #f8fafc;">
-
-                <tr>
-
-                    <th class="px-4 py-3">
-                        ID
-                    </th>
-
-                    <th class="py-3">
-                        Name
-                    </th>
-
-                    <th class="py-3">
-                        Father Name
-                    </th>
-
-                    <th class="py-3">
-                        Gender
-                    </th>
-
-                    <th class="py-3">
-                        CNIC
-                    </th>
-
-                    <th class="py-3">
-                        Age
-                    </th>
-
-                    <th class="py-3">
-                        Contact Number
-                    </th>
-
-                    <th class="py-3">
-                        Address
-                    </th>
-
-                    <th class="py-3 text-center"
-    style="width: 270px; min-width: 270px;">
-    Actions
-</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                @forelse($patients as $patient)
-
-                    <tr>
-
-                        <td class="px-4">
-                            {{ $patient->id }}
-                        </td>
-
-                        <td>
-                            {{ $patient->name }}
-                        </td>
-
-                        <td>
-                            {{ $patient->father_name }}
-                        </td>
-
-                        <td>
-                            {{ $patient->gender }}
-                        </td>
-
-                        <td>
-                            {{ $patient->cnic }}
-                        </td>
-
-                        <td>
-                            {{ $patient->age }}
-                        </td>
-
-                        <td>
-                            {{ $patient->contact_number }}
-                        </td>
-
-                        <td>
-                            {{ $patient->address }}
-                        </td>
-
-                        <td class="text-center"
-                            style="width: 270px; min-width: 270px; white-space: nowrap;">
-
-                            <div class="d-flex justify-content-center align-items-center gap-1">
-
-                                {{-- View --}}
-
-                                <button type="button"
-                                        class="btn btn-sm btn-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#patientViewModal{{ $patient->id }}">
-
-                                    <i class="bi bi-eye me-1"></i>
-                                    View
-
-                                </button>
+        <table class="table patients-table align-middle mb-0">
 
 
-                                {{-- Edit --}}
+            <thead>
+    <tr>
 
-                                <a href="{{ route('patients.edit', $patient->id) }}"
-                                   class="btn btn-sm btn-warning">
+        <th class="px-4 py-3">
+            ID
+        </th>
 
-                                    <i class="bi bi-pencil-square me-1"></i>
-                                    Edit
+        <th class="py-3">
+            Name
+        </th>
 
-                                </a>
+        <th class="py-3">
+            Father Name
+        </th>
+
+        <th class="py-3">
+            CNIC
+        </th>
+
+        <th class="py-3">
+            Contact Number
+        </th>
+
+        <th class="py-3 text-center"
+            style="width: 250px; min-width: 250px;">
+            Actions
+        </th>
+
+    </tr>
+</thead>
+
+<tbody>
+
+    @forelse($patients as $patient)
+
+        <tr>
+
+            <td class="px-4">
+                <span class="patient-id">
+                    {{ $patient->id }}
+                </span>
+            </td>
+
+            <td>
+                <span class="patient-name">
+                    {{ $patient->name }}
+                </span>
+            </td>
+
+            <td>
+                <span class="patient-father">
+                    {{ $patient->father_name }}
+                </span>
+            </td>
+
+            <td>
+                <span class="patient-cnic">
+                    {{ $patient->cnic }}
+                </span>
+            </td>
+
+            <td>
+                <span class="patient-contact">
+                    {{ $patient->contact_number }}
+                </span>
+            </td>
+
+            <td class="text-center"
+                style="width: 250px; min-width: 250px; white-space: nowrap;">
+
+                <div class="patient-actions">
+
+                    {{-- View --}}
+                    @can('view patients')
+
+                        <button type="button"
+                                class="btn patient-action-btn patient-view-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#patientViewModal{{ $patient->id }}">
+
+                            <i class="bi bi-eye"></i>
+                            View
+
+                        </button>
+
+                    @endcan
 
 
-                                {{-- Delete --}}
+                    {{-- Edit --}}
+                    @can('edit patients')
 
-                                <form action="{{ route('patients.destroy', $patient->id) }}"
-                                      method="POST"
-                                      style="display:inline; margin:0;">
+                        <a href="{{ route('patients.edit', $patient->id) }}"
+                           class="btn patient-action-btn patient-edit-btn">
 
-                                    @csrf
-                                    @method('DELETE')
+                            <i class="bi bi-pencil-square"></i>
+                            Edit
 
-                                    <button type="submit"
-                                            class="btn btn-sm btn-danger"
-                                            style="margin:0;"
-                                            onclick="return confirm('Are you sure you want to delete this patient?')">
+                        </a>
 
-                                        <i class="bi bi-trash me-1"></i>
-                                        Delete
+                    @endcan
 
-                                    </button>
 
-                                </form>
+                    {{-- Delete --}}
+                    @can('delete patients')
 
-                            </div>
+                        <form action="{{ route('patients.destroy', $patient->id) }}"
+                              method="POST"
+                              style="display:inline; margin:0;">
 
-                        </td>
+                            @csrf
+                            @method('DELETE')
 
-                    </tr>
+                            <button type="submit"
+                                    class="btn patient-action-btn patient-delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this patient?')">
+
+                                <i class="bi bi-trash"></i>
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    @endcan
+
+
+                    {{-- Medical History --}}
+                    @can('view patients')
+
+                        <a href="{{ route('patients.medical-history', $patient->id) }}"
+                           class="btn patient-action-btn patient-history-btn">
+
+                            <i class="bi bi-clock-history"></i>
+                            History
+
+                        </a>
+
+                    @endcan
+
+                </div>
+
+            </td>
+
+        </tr>
+
 
 
                     {{-- Patient View Modal --}}
@@ -188,10 +482,10 @@
                 </div>
 
                 <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
-                </button>
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close">
+</button>
 
             </div>
 
@@ -431,7 +725,7 @@
 
                     <tr>
 
-                        <td colspan="9"
+                        <td colspan="6"
                             class="text-center py-4 text-muted">
 
                             No patients found.

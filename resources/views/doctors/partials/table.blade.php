@@ -1,10 +1,222 @@
+<style>
+    /* =========================
+       Doctors Table
+    ========================== */
+
+    .doctors-table {
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .doctors-table thead th {
+        background: #eef5ff;
+        color: #334155;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.35px;
+        padding: 14px 14px;
+        border-bottom: 1px solid #dbe7f5;
+        white-space: nowrap;
+    }
+
+    .doctors-table tbody td {
+        padding: 14px;
+        font-size: 14px;
+        color: #334155;
+        border-bottom: 1px solid #edf2f7;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .doctors-table tbody tr {
+        background: #ffffff;
+        transition: background-color 0.15s ease;
+    }
+
+    .doctors-table tbody tr:hover {
+        background: #f5f9ff;
+    }
+
+    .doctors-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* =========================
+       ID
+    ========================== */
+
+    .doctor-id {
+        color: #334155;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       Doctor Name
+    ========================== */
+
+    .doctor-name {
+        color: #172033;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       Email / Phone
+    ========================== */
+
+    .doctor-email,
+    .doctor-phone {
+        color: #334155;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+
+    /* =========================
+       Specialization
+    ========================== */
+
+.doctor-specialization {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+
+    /* =========================
+       Action Buttons
+    ========================== */
+
+    .doctor-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .doctor-action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        height: 30px;
+        min-width: 62px;
+
+        padding: 4px 9px;
+
+        border-radius: 7px !important;
+
+        font-size: 12px !important;
+        font-weight: 500 !important;
+
+        border: 1px solid transparent !important;
+
+        box-shadow: none !important;
+
+        transition: all 0.15s ease;
+    }
+
+    .doctor-action-btn:hover {
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================
+       View - Blue
+    ========================== */
+
+    .doctor-view-btn {
+        background: #eff6ff !important;
+        border-color: #dbeafe !important;
+        color: #2563eb !important;
+    }
+
+    .doctor-view-btn:hover {
+        background: #dbeafe !important;
+        color: #1d4ed8 !important;
+    }
+
+
+    /* =========================
+       Edit - Neutral
+    ========================== */
+
+    .doctor-edit-btn {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #475569 !important;
+    }
+
+    .doctor-edit-btn:hover {
+        background: #e2e8f0 !important;
+        border-color: #94a3b8 !important;
+        color: #334155 !important;
+    }
+
+
+    /* =========================
+       Delete - Red
+    ========================== */
+
+    .doctor-delete-btn {
+        background: #fef2f2 !important;
+        border-color: #fecaca !important;
+        color: #dc2626 !important;
+    }
+
+    .doctor-delete-btn:hover {
+        background: #fee2e2 !important;
+        border-color: #fca5a5 !important;
+        color: #b91c1c !important;
+    }
+
+
+    /* =========================
+       Pagination
+    ========================== */
+
+    .doctors-pagination {
+        padding: 14px 20px;
+        border-top: 1px solid #f1f5f9;
+    }
+
+
+    /* =========================
+       Mobile
+    ========================== */
+
+    @media (max-width: 991.98px) {
+
+        .doctors-table tbody td {
+            padding: 12px;
+        }
+
+        .doctor-action-btn {
+            min-width: 60px;
+            padding: 5px 8px;
+        }
+
+    }
+</style>
+
+
 <div class="card-body p-0">
 
     <div class="table-responsive">
 
-        <table class="table table-hover align-middle mb-0">
+        <table class="table doctors-table align-middle mb-0">
 
-            <thead style="background: #f8fafc;">
+
+            <thead>
 
                 <tr>
                     <th class="px-4 py-3">ID</th>
@@ -30,83 +242,112 @@
 
                         {{-- ID --}}
                         <td class="px-4">
-                            {{ $doctor->id }}
-                        </td>
+    <span class="doctor-id">
+        {{ $doctor->id }}
+    </span>
+</td>
+
 
 
                         {{-- Name --}}
                         <td>
-                            {{ $doctor->name }}
-                        </td>
+    <span class="doctor-name">
+        {{ $doctor->name }}
+    </span>
+</td>
+
 
 
                         {{-- Email --}}
                         <td>
-                            {{ $doctor->email }}
-                        </td>
+    <span class="doctor-email">
+        {{ $doctor->email }}
+    </span>
+</td>
+
 
 
                         {{-- Phone --}}
                         <td>
-                            {{ $doctor->phone }}
-                        </td>
+    <span class="doctor-phone">
+        {{ $doctor->phone }}
+    </span>
+</td>
+
 
 
                         {{-- Specialization --}}
                         <td>
-                            {{ $doctor->specialization }}
-                        </td>
+    <span class="doctor-specialization">
+        {{ $doctor->specialization }}
+    </span>
+</td>
+
+
 
 
                         {{-- Actions --}}
                         <td class="text-center"
                             style="width: 270px; min-width: 270px; white-space: nowrap;">
 
-                            <div class="d-flex justify-content-center align-items-center gap-1">
+                            <div class="doctor-actions">
+
 
                                 {{-- View --}}
 
-                                <button type="button"
-                                        class="btn btn-sm btn-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#doctorViewModal{{ $doctor->id }}">
+                                @can('view doctors')
 
-                                    <i class="bi bi-eye me-1"></i>
-                                    View
+    <button type="button"
+            class="btn doctor-action-btn doctor-view-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#doctorViewModal{{ $doctor->id }}">
 
-                                </button>
+        <i class="bi bi-eye me-1"></i>
+        View
+
+    </button>
+
+@endcan
 
 
                                 {{-- Edit --}}
 
-                                <a href="{{ route('doctors.edit', $doctor->id) }}"
-                                   class="btn btn-sm btn-warning">
+                                @can('edit doctors')
 
-                                    <i class="bi bi-pencil-square me-1"></i>
-                                    Edit
+    <a href="{{ route('doctors.edit', $doctor->id) }}"
+       class="btn doctor-action-btn doctor-edit-btn">
 
-                                </a>
+        <i class="bi bi-pencil-square me-1"></i>
+        Edit
+
+    </a>
+
+@endcan
 
 
                                 {{-- Delete --}}
 
-                                <form action="{{ route('doctors.destroy', $doctor->id) }}"
-                                method="POST"
-                                class="m-0 p-0 d-flex align-items-center">
+                                @can('delete doctors')
 
-                                    @csrf
-                                    @method('DELETE')
+    <form action="{{ route('doctors.destroy', $doctor->id) }}"
+          method="POST"
+          class="m-0 p-0 d-flex align-items-center">
 
-                                    <button type="submit"
-                                    class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this doctor?')">
+        @csrf
+        @method('DELETE')
 
-                                    <i class="bi bi-trash me-1"></i>
-                                    Delete
+        <button type="submit"
+                class="btn doctor-action-btn doctor-delete-btn"
+                onclick="return confirm('Are you sure you want to delete this doctor?')">
 
-                                  </button>
+            <i class="bi bi-trash me-1"></i>
+            Delete
 
-                                </form>
+        </button>
+
+    </form>
+
+@endcan
 
                             </div>
 

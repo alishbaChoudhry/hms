@@ -84,19 +84,21 @@
 
 
                 {{-- Doctors --}}
-                <li class="nav-item">
+@role('Admin')
+<li class="nav-item">
 
-                    <a href="{{ route('doctors.index') }}" class="nav-link">
+    <a href="{{ route('doctors.index') }}" class="nav-link">
 
-                        <i class="nav-icon bi bi-person-badge"></i>
+        <i class="nav-icon bi bi-person-badge"></i>
 
-                        <p>
-                            Doctors
-                        </p>
+        <p>
+            Doctors
+        </p>
 
-                    </a>
+    </a>
 
-                </li>
+</li>
+@endrole
 
 
                 {{-- Appointments --}}

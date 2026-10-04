@@ -5,98 +5,217 @@
 @section('content')
 
 <style>
+    /* =========================
+   Dashboard Top Navigation
+========================== */
+
+.dashboard-content {
+        padding-top: 32px;
+    }
+.dashboard-topbar {
+    padding: 4px 0 14px;
+}
+
+.dashboard-breadcrumb {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-size: 13px;
+}
+
+.dashboard-breadcrumb a {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.dashboard-breadcrumb a:hover {
+    color: #0d6efd;
+}
+
+.dashboard-breadcrumb .active {
+    color: #94a3b8;
+}
+
+
+    /* =========================
+       Welcome Section
+    ========================== */
+
     .dashboard-welcome {
-        background: linear-gradient(135deg, #ffffff, #f4f8fb);
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 24px;
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
+    border: 1px solid #e3eaf3;
+    border-radius: 16px;
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+}
+
+.dashboard-welcome::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -60px;
+    top: -90px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.07);
+}
+
+.dashboard-welcome::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    right: 90px;
+    bottom: -45px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.04);
+}
+
+.dashboard-welcome h2 {
+    position: relative;
+    z-index: 2;
+    margin: 0 0 8px;
+    font-size: 26px;
+    font-weight: 650;
+    color: #172033;
+    letter-spacing: -0.4px;
+}
+
+.dashboard-welcome p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+
+    /* =========================
+       Statistics Cards
+    ========================== */
+
+    .dashboard-stat-col {
         margin-bottom: 24px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    .dashboard-welcome h2 {
-        margin: 0 0 8px;
-        font-size: 28px;
-        font-weight: 600;
-        color: #1f2937;
-    }
-
-    .dashboard-welcome p {
-        margin: 0;
-        color: #6b7280;
-        font-size: 16px;
     }
 
     .dashboard-box {
-        border-radius: 12px;
+        position: relative;
+        min-height: 190px;
+        border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-        transition: 0.2s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+        transition: all 0.25s ease;
+        border: 1px solid rgba(0, 0, 0, 0.03);
     }
 
     .dashboard-box:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        transform: translateY(-3px);
+        box-shadow: 0 9px 22px rgba(0, 0, 0, 0.11);
     }
 
     .dashboard-box .inner {
-        padding: 20px;
+        padding: 22px 24px 12px;
+        padding-right: 105px;
     }
 
     .dashboard-box .inner h3 {
-        font-size: 32px;
-        font-weight: 600;
-        margin-bottom: 5px;
+        font-size: 34px;
+        font-weight: 700;
+        margin: 0 0 6px;
+        color: #172033;
+        line-height: 1.2;
     }
 
     .dashboard-box .inner p {
         font-size: 16px;
-        margin-bottom: 0;
+        margin: 0;
+        color: #253047;
+        line-height: 1.45;
     }
 
     .dashboard-box .small-box-icon {
-        font-size: 60px;
-        opacity: 0.25;
+        position: absolute;
+        top: 28px;
+        right: 24px;
+        font-size: 58px;
+        opacity: 0.82;
+        line-height: 1;
     }
-    .dashboard-box .small-box-footer {
-    background: transparent;
-    padding: 10px 15px;
-    text-decoration: none;
-}
 
-.dashboard-box .small-box-footer:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
+    .dashboard-box .small-box-footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        padding: 11px 20px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s ease;
+    }
+
+    .dashboard-box .small-box-footer:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+
+    /* =========================
+       Bottom Cards
+    ========================== */
+
+    .dashboard-bottom-col {
+        margin-bottom: 24px;
+    }
 
     .dashboard-card {
         border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         overflow: hidden;
+        background: #fff;
     }
 
     .dashboard-card .card-header {
         background: #ffffff;
-        padding: 16px 20px;
+        padding: 17px 20px;
         border-bottom: 1px solid #e5e7eb;
     }
 
     .dashboard-card .card-title {
         font-size: 18px;
-        font-weight: 600;
-        color: #1f2937;
+        font-weight: 650;
+        color: #172033;
     }
 
+    .dashboard-card .card-body {
+        padding: 20px;
+    }
+
+
+    /* =========================
+       Hospital Overview
+    ========================== */
+
     .overview-item {
-        padding: 20px 10px;
+        height: 100%;
+        padding: 14px 10px;
     }
 
     .overview-item i {
-        font-size: 42px;
+        font-size: 40px;
     }
 
     .overview-item h5 {
-        margin-top: 12px;
+        margin-top: 10px;
+        margin-bottom: 8px;
         font-weight: 600;
         color: #1f2937;
     }
@@ -104,57 +223,116 @@
     .overview-item p {
         color: #6b7280;
         margin-bottom: 0;
+        line-height: 1.5;
+        font-size: 14px;
     }
 
+
+    /* =========================
+       Quick Actions
+    ========================== */
+
     .quick-btn {
-        border-radius: 8px;
-        padding: 11px;
+        border-radius: 9px;
+        padding: 11px 14px;
         font-size: 15px;
         font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .quick-btn:hover {
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================
+       Responsive
+    ========================== */
+
+    @media (max-width: 991.98px) {
+
+        
+    }
+
+
+    @media (max-width: 767.98px) {
+
+        .dashboard-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-page-title {
+            font-size: 28px;
+        }
+
+        .dashboard-breadcrumb {
+            float: none !important;
+        }
+
+        .dashboard-welcome {
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-welcome h2 {
+            font-size: 21px;
+        }
+
+        .dashboard-welcome p {
+            font-size: 14px;
+        }
+
+        .dashboard-box .inner {
+            padding-right: 90px;
+        }
+
+        .dashboard-box .small-box-icon {
+            right: 18px;
+            font-size: 50px;
+        }
+    }
+
+
+    @media (max-width: 575.98px) {
+
+        .dashboard-page-title {
+            font-size: 25px;
+        }
+
+        .dashboard-box {
+            min-height: 175px;
+        }
+
+        .dashboard-box .inner h3 {
+            font-size: 30px;
+        }
+
+        .dashboard-box .inner p {
+            font-size: 15px;
+        }
+
+        .dashboard-card .card-header {
+            padding: 15px;
+        }
+
+        .dashboard-card .card-body {
+            padding: 15px;
+        }
     }
 </style>
 
 
-{{-- Page Header --}}
-<div class="content-header">
-    <div class="container-fluid">
 
-        <div class="row mb-3">
-
-            <div class="col-sm-6">
-                <h1 class="m-0 fw-semibold">
-                    Dashboard
-                </h1>
-            </div>
-
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('dashboard') }}">
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="breadcrumb-item active">
-                        Dashboard
-                    </li>
-
-                </ol>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-
-<div class="content">
+<div class="content dashboard-content">
 
     <div class="container-fluid">
-
 
         {{-- Welcome --}}
+
+        
         <div class="dashboard-welcome">
 
             <h2>
@@ -162,145 +340,163 @@
             </h2>
 
             <p>
-                Manage patients, doctors, appointments, departments
-                and medicines from one place.
+                Manage patients, doc
+                tors, appointments, checkups
+                from one place.
             </p>
 
         </div>
 
 
-        {{-- Statistics --}}
-        <div class="row">
+        
+{{-- Statistics --}}
+<div class="row">
 
+    {{-- Patients --}}
+    <div class="{{ auth()->user()->hasRole('Admin') ? 'col-lg-3' : 'col-lg-4' }} col-md-6 col-12 dashboard-stat-col">
 
-            {{-- Patients --}}
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="small-box dashboard-box"
+             style="background: #e8f1ff;">
 
-                <div class="small-box text-bg-primary dashboard-box">
+            <div class="inner">
 
-                    <div class="inner">
+                <h3>
+                    {{ $patientsCount ?? 0 }}
+                </h3>
 
-                        <h3>
-                            {{ $patientsCount ?? 0 }}
-                        </h3>
-
-                        <p>
-                            Total Patients
-                        </p>
-
-                    </div>
-
-                    <i class="bi bi-people-fill small-box-icon"></i>
-
-                    <a href="{{ route('patients') }}"
-                       class="small-box-footer">
-
-                        View Patients
-                        <i class="bi bi-arrow-right"></i>
-
-                    </a>
-
-                </div>
+                <p>
+                    Total Patients
+                </p>
 
             </div>
 
+            <i class="bi bi-people-fill small-box-icon"
+               style="color: #2878d4;"></i>
 
-            {{-- Doctors --}}
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
+            <a href="{{ route('patients') }}"
+               class="small-box-footer"
+               style="color: #2878d4;">
 
-                <div class="small-box text-bg-success dashboard-box">
+                View Patients
+                <i class="bi bi-arrow-right"></i>
 
-                    <div class="inner">
+            </a>
 
-                        <h3>
-                            {{ $doctorsCount ?? 0 }}
-                        </h3>
+        </div>
 
-                        <p>
-                            Total Doctors
-                        </p>
-
-                    </div>
-
-                    <i class="bi bi-person-badge-fill small-box-icon"></i>
-
-                    <a href="{{ route('doctors.index') }}"
-                       class="small-box-footer">
-
-                        View Doctors
-                        <i class="bi bi-arrow-right"></i>
-
-                    </a>
-
-                </div>
-
-            </div>
+    </div>
 
 
-            {{-- Appointments --}}
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
+    {{-- Doctors --}}
+    @if(auth()->user()->hasRole('Admin'))
 
-                <div class="small-box text-bg-warning dashboard-box">
+        <div class="col-lg-3 col-md-6 col-12 dashboard-stat-col">
 
-                    <div class="inner">
+            <div class="small-box dashboard-box"
+                 style="background: #e8f7ef;">
 
-                        <h3>
-                       {{ $appointmentsCount ?? 0 }}
-                        </h3>
+                <div class="inner">
 
-                        <p>
-                            Appointments
-                        </p>
+                    <h3>
+                        {{ $doctorsCount ?? 0 }}
+                    </h3>
 
-                    </div>
-
-                    <i class="bi bi-calendar-check-fill small-box-icon"></i>
-
-                    <a href="{{ route('appointments.index') }}"
-                     class="small-box-footer">
-
-                      View Appointments
-                      <i class="bi bi-arrow-right"></i>
-
-                      </a>
+                    <p>
+                        Total Doctors
+                    </p>
 
                 </div>
 
-            </div>
+                <i class="bi bi-person-badge-fill small-box-icon"
+                   style="color: #198754;"></i>
 
+                <a href="{{ route('doctors.index') }}"
+                   class="small-box-footer"
+                   style="color: #198754;">
 
-            {{-- Departments --}}
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
+                    View Doctors
+                    <i class="bi bi-arrow-right"></i>
 
-                <div class="small-box text-bg-danger dashboard-box">
-
-                    <div class="inner">
-
-                        <h3>
-                            0
-                        </h3>
-
-                        <p>
-                            Departments
-                        </p>
-
-                    </div>
-
-                    <i class="bi bi-building-fill small-box-icon"></i>
-
-                    <a href="#"
-                       class="small-box-footer">
-
-                        View Departments
-                        <i class="bi bi-arrow-right"></i>
-
-                    </a>
-
-                </div>
+                </a>
 
             </div>
 
         </div>
+
+    @endif
+
+
+    {{-- Appointments --}}
+    <div class="{{ auth()->user()->hasRole('Admin') ? 'col-lg-3' : 'col-lg-4' }} col-md-6 col-12 dashboard-stat-col">
+
+        <div class="small-box dashboard-box"
+             style="background: #fff6d9;">
+
+            <div class="inner">
+
+                <h3>
+                    {{ $appointmentsCount ?? 0 }}
+                </h3>
+
+                <p>
+                    Total Appointments
+                </p>
+
+            </div>
+
+            <i class="bi bi-calendar-check-fill small-box-icon"
+               style="color: #d89b00;"></i>
+
+            <a href="{{ route('appointments.index') }}"
+               class="small-box-footer"
+               style="color: #d89b00;">
+
+                View Appointments
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {{-- Checkups --}}
+    <div class="{{ auth()->user()->hasRole('Admin') ? 'col-lg-3' : 'col-lg-4' }} col-md-6 col-12 dashboard-stat-col">
+
+        <div class="small-box dashboard-box"
+             style="background: #fdebed;">
+
+            <div class="inner">
+
+                <h3>
+                    {{ $checkupsCount ?? 0 }}
+                </h3>
+
+                <p>
+                    Total Checkups
+                </p>
+
+            </div>
+
+            <i class="bi bi-clipboard2-pulse-fill small-box-icon"
+               style="color: #d63b4a;"></i>
+
+            <a href="{{ route('checkups.index') }}"
+               class="small-box-footer"
+               style="color: #d63b4a;">
+
+                View Checkups
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 
         {{-- Bottom Section --}}
@@ -308,7 +504,8 @@
 
 
             {{-- Hospital Overview --}}
-            <div class="col-lg-8 mb-4">
+            <div class="col-lg-8 dashboard-bottom-col">
+
 
                 <div class="card dashboard-card h-100">
 
@@ -397,7 +594,8 @@
 
 
             {{-- Quick Actions --}}
-            <div class="col-lg-4 mb-4">
+            <div class="col-lg-4 dashboard-bottom-col">
+
 
                 <div class="card dashboard-card h-100">
 

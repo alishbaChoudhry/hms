@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 
 class SymptomController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of symptoms.
+     */
+    public function index()
 {
-    $symptoms = Symptom::oldest()->paginate(10);
+    $symptoms = Symptom::latest()->paginate(10);
 
-    if ($request->ajax()) {
+    if (request()->ajax()) {
         return view(
             'medical-care.symptoms.partials.table',
             compact('symptoms')
-        )->render();
+        );
     }
 
     return view(
@@ -24,42 +27,73 @@ class SymptomController extends Controller
     );
 }
 
+
+    /**
+     * Show the form for creating a new symptom.
+     */
     public function create()
     {
         return view('medical-care.symptoms.create');
     }
 
+    /**
+     * Store a newly created symptom.
+     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:symptoms,name',
-        ]);
+        $request->validate([
+    'name' => 'required|string|max:255',
+    'description' => 'nullable|string|max:1000',
+    'type' => 'required|in:Text,Number,Boolean',
+]);
 
-        Symptom::create($validated);
+        Symptom::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+        ]);
 
         return redirect()
             ->route('symptoms.index')
             ->with('success', 'Symptom added successfully.');
     }
 
+    /**
+     * Show the form for editing the specified symptom.
+     */
     public function edit(Symptom $symptom)
-{
-    return view('medical-care.symptoms.edit', compact('symptom'));
-}
+    {
+        return view(
+            'medical-care.symptoms.edit',
+            compact('symptom')
+        );
+    }
 
-public function update(Request $request, Symptom $symptom)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255|unique:symptoms,name,' . $symptom->id,
-    ]);
+    /**
+     * Update the specified symptom.
+     */
+    public function update(Request $request, Symptom $symptom)
+    {
+        $request->validate([
+    'name' => 'required|string|max:255',
+    'description' => 'nullable|string|max:1000',
+    'type' => 'required|in:Text,Number,Boolean',
+]);
 
-    $symptom->update($validated);
+        $symptom->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+        ]);
 
-    return redirect()
-        ->route('symptoms.index')
-        ->with('success', 'Symptom updated successfully.');
-}
+        return redirect()
+            ->route('symptoms.index')
+            ->with('success', 'Symptom updated successfully.');
+    }
 
+    /**
+     * Remove the specified symptom.
+     */
     public function destroy(Symptom $symptom)
     {
         $symptom->delete();

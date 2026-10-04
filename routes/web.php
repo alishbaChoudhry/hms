@@ -6,6 +6,10 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\SymptomController;
+use App\Http\Controllers\MedicalTestController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\CheckupController;
+use App\Http\Controllers\DosageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -57,6 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/patients/{patient}', [PatientController::class, 'destroy'])
         ->name('patients.destroy');
 
+        Route::get(
+    '/patients/{patient}/medical-history',
+    [PatientController::class, 'medicalHistory']
+)->name('patients.medical-history');
 
     // =========================
     // Doctors CRUD
@@ -109,22 +117,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])
         ->name('appointments.destroy');
-// Notifications
-    // =========================
 
-    Route::get('/notifications/{notification}/read', function ($notification) {
-
-        $notification = auth()->user()
-            ->notifications()
-            ->findOrFail($notification);
-
-        $notification->markAsRead();
-
-        return redirect(
-            $notification->data['url'] ?? route('dashboard')
-        );
-
-    })->name('notifications.read');
 
     Route::get('/medical-care', function () {
     return view('medical-care.index');
@@ -147,8 +140,78 @@ Route::put('/symptoms/{symptom}', [SymptomController::class, 'update'])
 
     Route::delete('/symptoms/{symptom}', [SymptomController::class, 'destroy'])
     ->name('symptoms.destroy');
-});
 
+    // =========================
+// Medical Tests CRUD
+// =========================
+
+Route::get('/medical-tests', [MedicalTestController::class, 'index'])
+    ->name('medical-tests.index');
+
+Route::get('/medical-tests/create', [MedicalTestController::class, 'create'])
+    ->name('medical-tests.create');
+
+Route::post('/medical-tests', [MedicalTestController::class, 'store'])
+    ->name('medical-tests.store');
+
+Route::get('/medical-tests/{medicalTest}/edit', [MedicalTestController::class, 'edit'])
+    ->name('medical-tests.edit');
+
+Route::put('/medical-tests/{medicalTest}', [MedicalTestController::class, 'update'])
+    ->name('medical-tests.update');
+
+Route::delete('/medical-tests/{medicalTest}', [MedicalTestController::class, 'destroy'])
+    ->name('medical-tests.destroy');
+
+    // =========================
+// Medicines CRUD
+// =========================
+
+Route::get('/medicines', [MedicineController::class, 'index'])
+    ->name('medicines.index');
+
+Route::get('/medicines/create', [MedicineController::class, 'create'])
+    ->name('medicines.create');
+
+Route::post('/medicines', [MedicineController::class, 'store'])
+    ->name('medicines.store');
+
+Route::get('/medicines/{medicine}/edit', [MedicineController::class, 'edit'])
+    ->name('medicines.edit');
+
+Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])
+    ->name('medicines.update');
+
+Route::delete('/medicines/{medicine}', [MedicineController::class, 'destroy'])
+    ->name('medicines.destroy');
+
+    // =========================
+// Checkups
+// =========================
+
+Route::get('/checkups', [CheckupController::class, 'index'])
+    ->name('checkups.index');
+
+Route::get('/checkups/create', [CheckupController::class, 'create'])
+    ->name('checkups.create');
+
+Route::post('/checkups', [CheckupController::class, 'store'])
+    ->name('checkups.store');
+
+    Route::get('/checkups/{checkup}', [CheckupController::class, 'show'])
+    ->name('checkups.show');
+
+Route::get('/checkups/{checkup}/edit', [CheckupController::class, 'edit'])
+    ->name('checkups.edit');
+
+Route::put('/checkups/{checkup}', [CheckupController::class, 'update'])
+    ->name('checkups.update');
+
+Route::delete('/checkups/{checkup}', [CheckupController::class, 'destroy'])
+    ->name('checkups.destroy');
+
+    Route::resource('dosages', DosageController::class);
+});
 
 // Laravel authentication routes
 require __DIR__.'/auth.php';

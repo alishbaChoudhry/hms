@@ -5,147 +5,223 @@
 @section('content')
 
 {{-- Page Header --}}
+
 <div class="content-header py-4">
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center">
 
-            {{-- Page Title --}}
-            <div>
-                <h1 class="mb-1"
-                    style="font-size: 28px; font-weight: 600; color: #1f2937;">
-                    Edit Symptom
-                </h1>
+    <div class="d-flex justify-content-between align-items-center">
 
-                <p class="mb-0 text-muted"
-                   style="font-size: 14px;">
-                    Update the information of this patient symptom.
-                </p>
-            </div>
+        <div>
+            <h1 class="mb-1"
+                style="font-size: 28px; font-weight: 600; color: #1f2937;">
+                Edit Symptom
+            </h1>
 
-            {{-- Back Button --}}
-            <div>
-                <a href="{{ route('symptoms.index') }}"
-                   class="btn btn-outline-primary px-3">
+            <p class="mb-0 text-muted"
+               style="font-size: 14px;">
+                Update the information of this patient symptom.
+            </p>
+        </div>
 
-                    <i class="bi bi-arrow-left me-1"></i>
-                    Back to Symptoms
+        <div>
+            <a href="{{ route('symptoms.index') }}"
+               class="btn btn-outline-primary px-3">
 
-                </a>
-            </div>
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Symptoms
 
+            </a>
         </div>
 
     </div>
+
+</div>
+```
+
 </div>
 
-
 {{-- Form Section --}}
+
 <div class="content pt-2">
     <div class="container-fluid">
 
-        <div class="row justify-content-center">
+```
+    <div class="row justify-content-center">
 
-            <div class="col-lg-8 col-xl-7">
+        <div class="col-lg-8 col-xl-7">
 
-                {{-- Symptom Card --}}
-                <div class="card shadow-sm border-0"
-                     style="border-radius: 10px; overflow: hidden;">
+            {{-- Symptom Card --}}
+            <div class="card shadow-sm border-0"
+                 style="border-radius: 10px; overflow: hidden;">
 
-                    {{-- Card Header --}}
-                    <div class="card-header bg-white py-3 px-4"
-                         style="border-bottom: 1px solid #e5e7eb;">
+                {{-- Card Header --}}
+                <div class="card-header bg-white py-3 px-4"
+                     style="border-bottom: 1px solid #e5e7eb;">
 
-                        <h3 class="card-title mb-0"
-                            style="font-size: 18px; font-weight: 500; color: #1f2937;">
+                    <h3 class="card-title mb-0"
+                        style="font-size: 18px; font-weight: 500; color: #1f2937;">
 
-                            <i class="bi bi-pencil-square me-2"
-                               style="color: #0d6efd;"></i>
+                        <i class="bi bi-pencil-square me-2"
+                           style="color: #0d6efd;"></i>
 
-                            Symptom Information
+                        Symptom Information
 
-                        </h3>
+                    </h3>
 
-                    </div>
+                </div>
 
 
-                    {{-- Form --}}
-                    <form action="{{ route('symptoms.update', $symptom->id) }}"
-                          method="POST">
+                {{-- Form --}}
+                <form action="{{ route('symptoms.update', $symptom->id) }}"
+                      method="POST">
 
-                        @csrf
-                        @method('PUT')
+                    @csrf
+                    @method('PUT')
 
-                        <div class="card-body px-4 py-4">
+                    <div class="card-body px-4 py-4">
 
-                            <div class="row">
+                        <div class="row">
 
-                                {{-- Symptom Name --}}
-                                <div class="col-md-12 mb-3">
+                            {{-- Symptom Name --}}
+                            <div class="col-md-12 mb-3">
 
-                                    <label for="name"
-                                           class="form-label"
-                                           style="font-weight: 500; color: #374151;">
+                                <label for="name"
+                                       class="form-label"
+                                       style="font-weight: 500; color: #374151;">
 
-                                        Symptom Name
+                                    Symptom Name
 
-                                    </label>
+                                </label>
 
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name', $symptom->name) }}"
-                                        placeholder="e.g. Fever"
-                                    >
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ old('name', $symptom->name) }}"
+                                    placeholder="e.g. Fever"
+                                >
 
-                                    @error('name')
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
 
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                            </div>
 
-                                    @enderror
 
-                                </div>
+                            {{-- Symptom Description --}}
+                            <div class="col-md-12 mb-3">
+
+                                <label for="description"
+                                       class="form-label"
+                                       style="font-weight: 500; color: #374151;">
+
+                                    Description
+
+                                </label>
+
+                                <textarea
+                                    name="description"
+                                    id="description"
+                                    rows="4"
+                                    class="form-control @error('description') is-invalid @enderror"
+                                    placeholder="Enter a brief description of this symptom..."
+                                >{{ old('description', $symptom->description) }}</textarea>
+
+                                @error('description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+
+                            </div>
+
+
+                            {{-- Field Type --}}
+                            <div class="col-md-12 mb-3">
+
+                                <label for="type"
+                                       class="form-label"
+                                       style="font-weight: 500; color: #374151;">
+
+                                    Field Type
+
+                                </label>
+
+                                <select
+                                    name="type"
+                                    id="type"
+                                    class="form-select @error('type') is-invalid @enderror">
+
+                                    <option value="">
+                                        Select Field Type
+                                    </option>
+
+                                    <option value="Text"
+                                        {{ old('type', $symptom->type) == 'Text' ? 'selected' : '' }}>
+                                        Text
+                                    </option>
+
+                                    <option value="Number"
+                                        {{ old('type', $symptom->type) == 'Number' ? 'selected' : '' }}>
+                                        Number
+                                    </option>
+
+                                    <option value="Boolean"
+                                        {{ old('type', $symptom->type) == 'Boolean' ? 'selected' : '' }}>
+                                        Boolean (Yes/No)
+                                    </option>
+
+                                </select>
+
+                                @error('type')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
 
                             </div>
 
                         </div>
 
+                    </div>
 
-                        {{-- Buttons --}}
-                        <div class="card-footer bg-white d-flex justify-content-end gap-2 px-4 py-3"
-                             style="border-top: 1px solid #e5e7eb;">
 
-                            <a href="{{ route('symptoms.index') }}"
-                               class="btn btn-danger px-3">
+                    {{-- Buttons --}}
+                    <div class="card-footer bg-white d-flex justify-content-end gap-2 px-4 py-3"
+                         style="border-top: 1px solid #e5e7eb;">
 
-                                <i class="bi bi-x-circle me-1"></i>
-                                Cancel
+                        <a href="{{ route('symptoms.index') }}"
+                           class="btn btn-danger px-3">
 
-                            </a>
+                            <i class="bi bi-x-circle me-1"></i>
+                            Cancel
 
-                            <button type="submit"
-                                    class="btn btn-primary px-3">
+                        </a>
 
-                                <i class="bi bi-check-circle me-1"></i>
-                                Update Symptom
+                        <button type="submit"
+                                class="btn btn-primary px-3">
 
-                            </button>
+                            <i class="bi bi-check-circle me-1"></i>
+                            Update Symptom
 
-                        </div>
+                        </button>
 
-                    </form>
+                    </div>
 
-                </div>
+                </form>
 
             </div>
 
         </div>
 
     </div>
+
+</div>
+
 </div>
 
 @endsection
